@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="todo.css">
+    <script src="../vue.js"></script>
+</head>
+<body>
+<div id="app">
+    <input type="text" v-model="con" @keyup.enter="submit" v-focus>
+    <div class="aa">
+        <input type="button" @click="changestatus('all')" value="全部" :class="status=='all'?'check':''">
+        <input type="button" @click="changestatus('0')" value="未完成" :class="status=='0'?'check':''">
+        <input type="button" @click="changestatus('1')" value="已完成" :class="status=='1'?'check':''">
+    </div>
+
+    <ul class="list">
+        <li v-for="item in datas" v-if="item.edit">
+            <span class="tag" @click="changestate(item)" :class="item.status=='1'?'active':''"></span>
+            <p @dblclick="edit(item)">{{item.title}}</p>
+            <span class="del" @click="del(item.id)">删除</span>
+        </li>
+        <li v-else="item.edit">
+            <input type="text" v-model="item.title" @blur="edit(item)">
+        </li>
+    </ul>
+    <div v-show="all.length==0">没有数据</div>
+</div>
+<script src="todo.js"></script>
+</body>
+</html>

@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="vue.js"></script>
+</head>
+<body>
+    <div id="app">
+       <span v-on:click="aa">{{num1}}</span>+<span v-on:click="bb">{{num2}}</span>=
+        <custom :con="div"></custom>
+        <custom con="div1"></custom>
+    </div>
+
+</body>
+<script>
+    /*
+    * 完整的组件
+    * 结构  逻辑  数据
+    *
+    * */
+    Vue.component("custom",{
+        props:{
+            con:[String,Number],
+        },
+        template:`<div @click="change">{{name}}</div>`,
+        data(){
+            return{
+                name:this.con
+            }
+        },
+        methods:{
+            change(){
+                this.name = "lisi"
+            }
+        }
+    })
+    let app = new Vue({
+        el:"#app",
+        data:{
+            num1:0,
+            num2:0,
+            div:'sds',
+        },
+        computed:{
+            result1(){
+               this.result = this.num1*1+this.num2*1;
+                return this.result;
+            }
+        },
+        methods:{
+            aa(){
+               this.num1 = this.num1*1+1
+            },
+            bb(){
+                this.num2 = this.num2*1+1
+            }
+        },
+        watch:{
+            num1(v1,v2){
+                this.result = v1 + this.num2*1
+            },
+            num2(v1,v2){
+                this.result = v1 + this.num1*1
+            }
+        }
+    })
+</script>
+</html>
